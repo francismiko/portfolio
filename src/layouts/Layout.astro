@@ -1,0 +1,37 @@
+---
+import "@/styles/global.css";
+import { getLangFromUrl, useTranslations } from "@/i18n/ui";
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const { title = "Portfolio", description = "个人简历" } = Astro.props;
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<!doctype html>
+<html lang={lang} class="scroll-smooth">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content={description} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<title>{title}</title>
+		<!-- 深色模式脚本 - 避免闪烁 -->
+		<script is:inline>
+			const theme = localStorage.getItem("theme");
+			if (
+				theme === "dark" ||
+				(!theme && window.matchMedia("(prefers-color-scheme: dark)").matches)
+			) {
+				document.documentElement.classList.add("dark");
+			}
+		</script>
+	</head>
+	<body class="min-h-screen">
+		<slot />
+	</body>
+</html>

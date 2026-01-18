@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+/* 浮雕极简设计系统 - Embossed Minimalism */
+@theme {
+	/* 色彩系统 - OKLCH */
+	--color-bg-light: oklch(0.985 0 0);
+	--color-bg-dark: oklch(0.15 0 0);
+	--color-text-light: oklch(0.2 0 0);
+	--color-text-dark: oklch(0.9 0 0);
+	--color-primary: oklch(0.6 0.15 250);
+
+	/* 字体 */
+	--font-sans: "Inter", system-ui, sans-serif;
+	--font-serif: "Noto Serif SC", serif;
+}
+
+/* 基础样式 */
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	@apply bg-[--color-bg-light] text-[--color-text-light] antialiased;
+	font-family: var(--font-sans);
+}
+
+/* 深色模式 */
+.dark body {
+	@apply bg-[--color-bg-dark] text-[--color-text-dark];
+}
+
+/* 新拟物主义效果 */
+.embossed-raised {
+	box-shadow:
+		6px 6px 12px rgba(0, 0, 0, 0.08),
+		-6px -6px 12px rgba(255, 255, 255, 0.8);
+}
+
+.dark .embossed-raised {
+	box-shadow:
+		6px 6px 12px rgba(0, 0, 0, 0.4),
+		-6px -6px 12px rgba(255, 255, 255, 0.05);
+}
+
+.embossed-inset {
+	box-shadow:
+		inset 4px 4px 8px rgba(0, 0, 0, 0.06),
+		inset -4px -4px 8px rgba(255, 255, 255, 0.7);
+}
+
+.dark .embossed-inset {
+	box-shadow:
+		inset 4px 4px 8px rgba(0, 0, 0, 0.3),
+		inset -4px -4px 8px rgba(255, 255, 255, 0.03);
+}

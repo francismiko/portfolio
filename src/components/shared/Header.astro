@@ -1,0 +1,29 @@
+---
+import { getLangFromUrl, type Lang, useTranslations } from "@/i18n/ui";
+import LanguageSwitch from "./LanguageSwitch.astro";
+import { ThemeToggle } from "./ThemeToggle";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-[--color-bg-light]/80 dark:bg-[--color-bg-dark]/80 border-b border-black/[0.04] dark:border-white/[0.06]">
+	<nav class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+		<a href={lang === "zh" ? "/" : "/en"} class="text-xl font-semibold">
+			Portfolio
+		</a>
+
+		<div class="hidden md:flex items-center gap-8">
+			<a href="#about" class="hover:text-[--color-primary] transition-colors">{t("nav.about")}</a>
+			<a href="#skills" class="hover:text-[--color-primary] transition-colors">{t("nav.skills")}</a>
+			<a href="#projects" class="hover:text-[--color-primary] transition-colors">{t("nav.projects")}</a>
+			<a href="#experience" class="hover:text-[--color-primary] transition-colors">{t("nav.experience")}</a>
+			<a href="#contact" class="hover:text-[--color-primary] transition-colors">{t("nav.contact")}</a>
+		</div>
+
+		<div class="flex items-center gap-3">
+			<ThemeToggle client:load />
+			<LanguageSwitch currentLang={lang} />
+		</div>
+	</nav>
+</header>

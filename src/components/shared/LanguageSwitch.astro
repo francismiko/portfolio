@@ -1,0 +1,20 @@
+---
+import type { languages } from "@/i18n/ui";
+
+interface Props {
+	currentLang: keyof typeof languages;
+}
+
+const { currentLang } = Astro.props;
+
+const otherLang = currentLang === "zh" ? "en" : "zh";
+const otherLangPath = currentLang === "zh" ? "/en" : "/";
+---
+
+<a
+	href={otherLangPath}
+	class="h-9 px-3 rounded-full embossed-raised hover:scale-105 transition-transform cursor-pointer inline-flex items-center justify-center text-sm font-medium"
+	aria-label={`Switch to ${languages[otherLang]}`}
+>
+	{languages[otherLang]}
+</a>
