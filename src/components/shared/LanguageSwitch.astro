@@ -1,13 +1,13 @@
 ---
-import type { languages } from "@/i18n/ui";
+import { languages, type Lang } from "@/i18n/ui";
 
 interface Props {
-	currentLang: keyof typeof languages;
+	currentLang: Lang;
 }
 
 const { currentLang } = Astro.props;
 
-const otherLang = currentLang === "zh" ? "en" : "zh";
+const otherLang: Lang = currentLang === "zh" ? "en" : "zh";
 const otherLangPath = currentLang === "zh" ? "/en" : "/";
 ---
 
