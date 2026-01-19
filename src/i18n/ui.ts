@@ -40,6 +40,7 @@ const zh = {
 		skills: "技能",
 		projects: "项目",
 		experience: "经历",
+		education: "教育",
 		contact: "联系",
 	},
 	hero: {
@@ -59,6 +60,9 @@ const zh = {
 	},
 	experience: {
 		title: "工作经历",
+	},
+	education: {
+		title: "教育背景",
 	},
 	contact: {
 		title: "联系我",
@@ -81,6 +85,7 @@ const en = {
 		skills: "Skills",
 		projects: "Projects",
 		experience: "Experience",
+		education: "Education",
 		contact: "Contact",
 	},
 	hero: {
@@ -100,6 +105,9 @@ const en = {
 	},
 	experience: {
 		title: "Experience",
+	},
+	education: {
+		title: "Education",
 	},
 	contact: {
 		title: "Contact",

@@ -1,78 +1,219 @@
 ---
-import Header from "@/components/shared/Header.astro";
 import { resume } from "@/content/resume";
 import { getLangFromUrl, useTranslations } from "@/i18n/ui";
 import Layout from "@/layouts/Layout.astro";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
+
+// 初始语言（从 URL 获取，后续由 JS 控制）
+const initialLang = lang;
+
+// 翻译键值对（静态部分）
+const staticTranslations = {
+	zh: {
+		nav: {
+			skills: "技能",
+			projects: "项目",
+			experience: "经历",
+			education: "教育",
+			contact: "联系",
+		},
+		hero: {
+			greeting: "你好，我是",
+			cta: "了解更多",
+		},
+		skills: {
+			title: "技术栈",
+		},
+		projects: {
+			title: "项目",
+		},
+		experience: {
+			title: "工作经历",
+		},
+		education: {
+			title: "教育背景",
+		},
+		contact: {
+			title: "联系我",
+		},
+		footer: {
+			copyright: "版权所有",
+		},
+	},
+	en: {
+		nav: {
+			skills: "Skills",
+			projects: "Projects",
+			experience: "Experience",
+			education: "Education",
+			contact: "Contact",
+		},
+		hero: {
+			greeting: "Hi, I'm",
+			cta: "Learn More",
+		},
+		skills: {
+			title: "Tech Stack",
+		},
+		projects: {
+			title: "Projects",
+		},
+		experience: {
+			title: "Experience",
+		},
+		education: {
+			title: "Education",
+		},
+		contact: {
+			title: "Contact",
+		},
+		footer: {
+			copyright: "All rights reserved",
+		},
+	},
+};
+
+const tr = staticTranslations[initialLang as keyof typeof staticTranslations];
 ---
 
-<Layout title="Portfolio" description={resume.personal.bio[lang]}>
-	<Header />
-
-	<main class="pt-16">
+<Layout title={`Francis 范挚铖 - Portfolio`} lang={initialLang}>
+	<main>
 		<!-- Hero Section -->
-		<section class="min-h-screen flex items-center justify-center px-6">
-			<div class="max-w-3xl text-center">
-				<p class="text-lg text-black/60 dark:text-white/60 mb-4">
-					{t("hero.greeting")}
-				</p>
-				<h1 class="text-5xl md:text-7xl font-bold mb-6">
-					{resume.personal.name[lang]}
-				</h1>
-				<p class="text-2xl md:text-3xl text-[--color-primary] font-medium mb-8">
-					{resume.personal.title[lang]}
-				</p>
-				<p class="text-lg text-black/70 dark:text-white/70 mb-12 max-w-xl mx-auto">
-					{resume.personal.bio[lang]}
-				</p>
-				<a
-					href="#about"
-					class="inline-flex items-center gap-2 px-8 py-4 rounded-full embossed-raised hover:scale-105 transition-transform cursor-pointer font-medium"
-				>
-					{t("hero.cta")}
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						viewBox="0 0 20 20"
-						fill="currentColor"
-						class="w-5 h-5"
-					>
-						<path
-							fill-rule="evenodd"
-							d="M5.22 14.78a.75.75 0 001.06 0l7.22-7.22v5.69a.75.75 0 001.5 0v-7.5a.75.75 0 00-.75-.75h-7.5a.75.75 0 000 1.5h5.69l-7.22 7.22a.75.75 0 000 1.06z"
-							clip-rule="evenodd"></path>
-					</svg>
-				</a>
-			</div>
-		</section>
+		<section class="min-h-screen flex items-end px-6 md:px-12 lg:px-20 xl:px-32 pb-20 md:pb-32 pt-32 relative overflow-hidden">
+			<!-- Decorative floating elements -->
+			<div class="absolute top-20 right-[15%] w-px h-32 bg-gradient-to-b from-[#D4AF37]/40 to-transparent animate-float hidden lg:block"></div>
+			<div class="absolute bottom-40 left-[10%] w-px h-24 bg-gradient-to-t from-[#D4AF37]/30 to-transparent animate-float delay-300 hidden lg:block"></div>
 
-		<!-- About Section -->
-		<section id="about" class="py-24 px-6 bg-black/[0.02] dark:bg-white/[0.02]">
-			<div class="max-w-5xl mx-auto">
-				<h2 class="text-4xl font-bold mb-12 text-center">{t("about.title")}</h2>
-				<div class="embossed-raised rounded-2xl p-8">
-					<p class="text-lg text-black/70 dark:text-white/70 leading-relaxed">
-						{resume.personal.bio[lang]}
-					</p>
+			<!-- Vertical label (desktop only) -->
+			<div class="hidden lg:block absolute left-8 top-1/2 -translate-y-1/2">
+				<span class="vertical-text text-[10px] uppercase tracking-[0.3em] text-[#6C6863] animate-on-load animate-fade-in delay-700 lang-static" data-lang="zh">Portfolio / 2025</span>
+				<span class="vertical-text text-[10px] uppercase tracking-[0.3em] text-[#6C6863] animate-on-load animate-fade-in delay-700 lang-static hidden" data-lang="en">Portfolio / 2025</span>
+			</div>
+
+			<div class="max-w-[1280px] mx-auto w-full">
+				<div class="grid lg:grid-cols-12 gap-12 lg:gap-24 items-end">
+					<!-- Avatar -->
+					{resume.personal.avatar && (
+						<div class="lg:col-span-5 lg:col-start-1 animate-on-load animate-scale-in">
+							<div class="group relative aspect-[3/4] max-w-md overflow-hidden shadow-luxury-deep shadow-inner-border corner-decoration">
+								<img
+									src={resume.personal.avatar}
+									alt="Francis 范挚铖"
+									class="w-full h-full object-cover img-editorial"
+								/>
+								<!-- Gradient overlay -->
+								<div class="absolute inset-0 bg-gradient-to-t from-[#1A1A1A]/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"></div>
+								<!-- Decorative vertical label on image -->
+								<div class="hidden md:flex absolute right-4 top-4 bottom-4 items-center">
+									<span class="vertical-text text-[10px] uppercase tracking-[0.25em] text-white/60 group-hover:text-[#D4AF37] transition-colors duration-700 lang-static" data-lang="zh">AI 产品设计者</span>
+									<span class="vertical-text text-[10px] uppercase tracking-[0.25em] text-white/60 group-hover:text-[#D4AF37] transition-colors duration-700 lang-static hidden" data-lang="en">AI Product Designer</span>
+								</div>
+								<!-- Bottom info bar -->
+								<div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-[#1A1A1A]/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+									<span class="text-[10px] uppercase tracking-[0.2em] text-white/80 lang-static" data-lang="zh">杭州 · {new Date().getFullYear()}</span>
+									<span class="text-[10px] uppercase tracking-[0.2em] text-white/80 lang-static hidden" data-lang="en">Hangzhou · {new Date().getFullYear()}</span>
+								</div>
+							</div>
+						</div>
+					)}
+
+					<!-- Hero content -->
+					<div class="lg:col-span-6 lg:col-start-7">
+						<!-- Decorative line -->
+						<div class="flex items-center gap-4 mb-6 animate-on-load animate-slide-in-left delay-100">
+							<div class="h-px w-8 md:w-12 bg-[#1A1A1A]"></div>
+							<span class="text-[10px] uppercase tracking-[0.3em] text-[#6C6863] lang-static" data-lang="zh">{tr.hero.greeting}</span>
+							<span class="text-[10px] uppercase tracking-[0.3em] text-[#6C6863] lang-static hidden" data-lang="en">{tr.hero.greeting}</span>
+						</div>
+
+						<!-- Name -->
+						<h1 class="font-serif text-5xl md:text-7xl lg:text-8xl leading-[0.9] mb-6 animate-on-load animate-fade-in-up delay-200">
+							<span class="block">Francis</span>
+							<span class="block">范挚铖</span>
+						</h1>
+
+						<!-- Title with gold accent -->
+						<p class="text-xl md:text-2xl mb-8 animate-on-load animate-fade-in-up delay-300">
+							<span class="text-[#6C6863]">/</span>
+							<span class="font-serif italic text-[#D4AF37] ml-2 lang-static" data-lang="zh">{resume.personal.title.zh}</span>
+							<span class="font-serif italic text-[#D4AF37] ml-2 lang-static hidden" data-lang="en">{resume.personal.title.en}</span>
+						</p>
+
+						<!-- Bio -->
+						<p class="font-serif text-base md:text-lg text-[#6C6863] leading-relaxed max-w-xl mb-12 animate-on-load animate-fade-in-up delay-400">
+							<span class="lang-static" data-lang="zh">{resume.personal.bio.zh}</span>
+							<span class="lang-static hidden" data-lang="en">{resume.personal.bio.en}</span>
+						</p>
+
+						<!-- CTA Buttons -->
+						<div class="flex flex-wrap gap-4 animate-on-load animate-fade-in-up delay-500">
+							<a href="#experience" class="btn-luxury inline-flex items-center h-12 px-8 text-xs uppercase tracking-[0.2em] font-medium">
+								<span class="flex items-center gap-3">
+									<span class="lang-static" data-lang="zh">{tr.hero.cta}</span>
+									<span class="lang-static hidden" data-lang="en">{tr.hero.cta}</span>
+									<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+										<path d="M7 17L17 7M17 7H7M17 7V17" />
+									</svg>
+								</span>
+							</a>
+							<a href="#contact" class="btn-outline inline-flex items-center h-12 px-8 text-xs uppercase tracking-[0.2em] font-medium">
+								<span class="lang-static" data-lang="zh">{tr.contact.title}</span>
+								<span class="lang-static hidden" data-lang="en">{tr.contact.title}</span>
+							</a>
+							<button id="download-pdf-hero" class="btn-ghost inline-flex items-center h-12 px-8 text-xs uppercase tracking-[0.2em] font-medium">
+								<span class="flex items-center gap-2">
+									<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+										<path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+									</svg>
+									<span class="lang-static" data-lang="zh">PDF</span>
+									<span class="lang-static hidden" data-lang="en">PDF</span>
+								</span>
+							</button>
+						</div>
+					</div>
 				</div>
+			</div>
+
+			<!-- Scroll indicator -->
+			<div class="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 animate-on-load animate-fade-in delay-800">
+				<span class="text-[10px] uppercase tracking-[0.2em] text-[#6C6863]">Scroll</span>
+				<div class="w-px h-8 bg-gradient-to-b from-[#1A1A1A] to-transparent"></div>
 			</div>
 		</section>
 
 		<!-- Skills Section -->
-		<section id="skills" class="py-24 px-6">
-			<div class="max-w-5xl mx-auto">
-				<h2 class="text-4xl font-bold mb-12 text-center">{t("skills.title")}</h2>
-				<div class="grid md:grid-cols-3 gap-6">
+		<section id="skills" class="py-24 md:py-40 px-6 md:px-12 lg:px-20 xl:px-32 border-t border-[#1A1A1A]/10">
+			<div class="max-w-[1280px] mx-auto">
+				<!-- Section header -->
+				<div class="flex items-center gap-4 mb-20 md:mb-28">
+					<span class="text-[10px] uppercase tracking-[0.3em] text-[#6C6863]">01</span>
+					<div class="h-px flex-1 bg-[#1A1A1A]/10"></div>
+					<h2 class="font-serif text-3xl md:text-4xl">
+						<span class="lang-static" data-lang="zh">{tr.skills.title}</span>
+						<span class="lang-static hidden" data-lang="en">{tr.skills.title}</span>
+					</h2>
+					<div class="h-px flex-1 bg-[#1A1A1A]/10"></div>
+				</div>
+
+				<!-- Skills grid -->
+				<div class="grid md:grid-cols-3 gap-12 lg:gap-20">
 					{resume.skills.map((skill) => (
-						<div class="embossed-raised rounded-2xl p-6">
-							<h3 class="text-xl font-semibold mb-4">{skill.category[lang]}</h3>
-							<div class="flex flex-wrap gap-2">
-								{skill.items.map((item) => (
-									<span class="px-3 py-1 rounded-full bg-black/[0.04] dark:bg-white/[0.06] text-sm">
-										{item}
-									</span>
-								))}
+						<div class="skill-category group flex flex-col items-center">
+							<div class="text-left">
+								<h3 class="font-serif text-xl md:text-2xl text-[#1A1A1A] mb-8 group-hover:text-[#D4AF37] transition-colors duration-500">
+									<span class="lang-static" data-lang="zh">{skill.category.zh}</span>
+									<span class="lang-static hidden" data-lang="en">{skill.category.en}</span>
+								</h3>
+								<div class="space-y-4">
+									{skill.items.map((item, itemIndex) => (
+										<p class="font-serif text-base text-[#6C6863] group-hover:text-[#1A1A1A] transition-colors duration-500" style={`transition-delay: ${itemIndex * 40}ms`}>
+											<span class="lang-static" data-lang="zh">{item.zh}</span>
+											<span class="lang-static hidden" data-lang="en">{item.en}</span>
+										</p>
+									))}
+								</div>
 							</div>
 						</div>
 					))}
@@ -81,44 +222,49 @@ const t = useTranslations(lang);
 		</section>
 
 		<!-- Projects Section -->
-		<section id="projects" class="py-24 px-6 bg-black/[0.02] dark:bg-white/[0.02]">
-			<div class="max-w-5xl mx-auto">
-				<h2 class="text-4xl font-bold mb-12 text-center">{t("projects.title")}</h2>
-				<div class="grid md:grid-cols-2 gap-6">
+		<section id="projects" class="py-20 md:py-32 px-6 md:px-12 lg:px-20 xl:px-32 bg-[#1A1A1A] text-[#F9F8F6] relative overflow-hidden">
+			<div class="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-[#D4AF37]/5 to-transparent pointer-events-none"></div>
+			<div class="absolute bottom-0 left-0 w-1/3 h-1/3 bg-gradient-to-tr from-[#D4AF37]/3 to-transparent pointer-events-none"></div>
+
+			<div class="max-w-[1280px] mx-auto relative">
+				<!-- Section header -->
+				<div class="flex items-center gap-4 mb-16">
+					<span class="text-[10px] uppercase tracking-[0.3em] text-[#F9F8F6]/60">02</span>
+					<div class="h-px flex-1 bg-[#F9F8F6]/10"></div>
+					<h2 class="font-serif text-3xl md:text-4xl">
+						<span class="lang-static" data-lang="zh">{tr.projects.title}</span>
+						<span class="lang-static hidden" data-lang="en">{tr.projects.title}</span>
+					</h2>
+					<div class="h-px flex-1 bg-[#F9F8F6]/10"></div>
+				</div>
+
+				<div class="space-y-20">
 					{resume.projects.map((project) => (
-						<div class="embossed-raised rounded-2xl p-6">
-							<h3 class="text-xl font-semibold mb-2">{project.name}</h3>
-							<p class="text-black/60 dark:text-white/60 mb-4">
-								{project.description[lang]}
-							</p>
-							<div class="flex flex-wrap gap-2 mb-4">
-								{project.tech.map((tech) => (
-									<span class="px-2 py-1 rounded bg-[--color-primary]/10 text-[--color-primary] text-xs font-medium">
-										{tech}
-									</span>
-								))}
-							</div>
-							<div class="flex gap-4">
+						<div class="project-card grid lg:grid-cols-12 gap-8 lg:gap-16 items-start border-t border-[#F9F8F6]/10 pt-12 pl-6 group">
+							<div class="lg:col-span-4">
+								<span class="text-[10px] uppercase tracking-[0.25em] text-[#F9F8F6]/40 block mb-4 lang-static" data-lang="zh">Featured Project</span>
+								<span class="text-[10px] uppercase tracking-[0.25em] text-[#F9F8F6]/40 block mb-4 lang-static hidden" data-lang="en">Featured Project</span>
+								<h3 class="font-serif text-2xl md:text-3xl mb-4 group-hover:text-[#D4AF37] transition-colors duration-500">{project.name}</h3>
 								{project.url && (
-									<a
-										href={project.url}
-										target="_blank"
-										rel="noopener noreferrer"
-										class="text-sm text-[--color-primary] hover:underline"
-									>
-										Live Demo
+									<a href={project.url} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 text-[#D4AF37] text-sm underline-gold transition-all duration-500 group/link">
+										<span class="lang-static" data-lang="zh">查看项目</span>
+										<span class="lang-static hidden" data-lang="en">View Project</span>
+										<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-transform duration-300 group-hover/link:translate-x-1 group-hover/link:-translate-y-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+											<path d="M7 17L17 7M17 7H7M17 7V17" />
+										</svg>
 									</a>
 								)}
-								{project.github && (
-									<a
-										href={project.github}
-										target="_blank"
-										rel="noopener noreferrer"
-										class="text-sm text-[--color-primary] hover:underline"
-									>
-										GitHub
-									</a>
-								)}
+							</div>
+							<div class="lg:col-span-7 lg:col-start-6">
+								<p class="font-serif text-[#F9F8F6]/70 leading-relaxed mb-8 text-lg">
+									<span class="lang-static" data-lang="zh">{project.description.zh}</span>
+									<span class="lang-static hidden" data-lang="en">{project.description.en}</span>
+								</p>
+								<div class="flex flex-wrap gap-3">
+									{project.tech.map((tech) => (
+										<span class="text-xs uppercase tracking-[0.15em] text-[#F9F8F6]/40 border border-[#F9F8F6]/20 px-4 py-2 hover:border-[#D4AF37] hover:text-[#D4AF37] transition-all duration-500">{tech}</span>
+									))}
+								</div>
 							</div>
 						</div>
 					))}
@@ -127,61 +273,248 @@ const t = useTranslations(lang);
 		</section>
 
 		<!-- Experience Section -->
-		<section id="experience" class="py-24 px-6">
-			<div class="max-w-5xl mx-auto">
-				<h2 class="text-4xl font-bold mb-12 text-center">{t("experience.title")}</h2>
-				<div class="space-y-6">
+		<section id="experience" class="py-20 md:py-32 px-6 md:px-12 lg:px-20 xl:px-32 border-t border-[#1A1A1A]/10">
+			<div class="max-w-[1280px] mx-auto">
+				<!-- Section header -->
+				<div class="flex items-center gap-4 mb-16">
+					<span class="text-[10px] uppercase tracking-[0.3em] text-[#6C6863]">03</span>
+					<div class="h-px flex-1 bg-[#1A1A1A]/10"></div>
+					<h2 class="font-serif text-3xl md:text-4xl">
+						<span class="lang-static" data-lang="zh">{tr.experience.title}</span>
+						<span class="lang-static hidden" data-lang="en">{tr.experience.title}</span>
+					</h2>
+					<div class="h-px flex-1 bg-[#1A1A1A]/10"></div>
+				</div>
+
+				<div class="space-y-0">
 					{resume.experience.map((exp) => (
-						<div class="embossed-raised rounded-2xl p-6">
-							<div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-								<div>
-									<h3 class="text-xl font-semibold">{exp.company}</h3>
-									<p class="text-[--color-primary]">{exp.title[lang]}</p>
+						<div class="grid lg:grid-cols-12 gap-8 lg:gap-16 border-t border-[#1A1A1A] pt-12 pb-16 group hover:border-t-[#D4AF37] transition-colors duration-500">
+							<!-- Left column -->
+							<div class="lg:col-span-4">
+								<div class="timeline-item">
+									<span class="text-[10px] uppercase tracking-[0.25em] text-[#6C6863] block mb-3">{exp.period}</span>
+									<h3 class="font-serif text-xl md:text-2xl mb-2 group-hover:text-[#D4AF37] transition-colors duration-500">{exp.company}</h3>
+									<p class="font-serif italic text-[#6C6863]">
+										<span class="lang-static" data-lang="zh">{exp.title.zh}</span>
+										<span class="lang-static hidden" data-lang="en">{exp.title.en}</span>
+									</p>
 								</div>
-								<p class="text-black/50 dark:text-white/50 text-sm">{exp.period}</p>
 							</div>
-							<p class="text-black/70 dark:text-white/70 mb-4">{exp.description[lang]}</p>
-							<ul class="space-y-2">
-								{exp.highlights.map((highlight) => (
-									<li class="flex items-start gap-2 text-sm text-black/60 dark:text-white/60">
-										<span class="text-[--color-primary] mt-1">•</span>
-										{highlight[lang]}
-									</li>
-								))}
-							</ul>
+
+							<!-- Right column -->
+							<div class="lg:col-span-7 lg:col-start-6">
+								<p class="font-serif text-[#6C6863] leading-relaxed mb-10 text-lg">
+									<span class="lang-static" data-lang="zh">{exp.description.zh}</span>
+									<span class="lang-static hidden" data-lang="en">{exp.description.en}</span>
+								</p>
+								<ul class="space-y-5">
+									{exp.highlights.map((highlight, hIndex) => (
+										<li class="flex items-start gap-4 group/item hover:translate-x-2 transition-transform duration-300" style={`transition-delay: ${hIndex * 50}ms`}>
+											<span class="text-[#D4AF37] mt-1 font-serif text-base leading-none">—</span>
+											<span class="font-serif text-[#1A1A1A]/80 group-hover/item:text-[#1A1A1A] transition-colors duration-300 leading-relaxed">
+												<span class="lang-static" data-lang="zh">{highlight.zh}</span>
+												<span class="lang-static hidden" data-lang="en">{highlight.en}</span>
+											</span>
+										</li>
+									))}
+								</ul>
+							</div>
 						</div>
 					))}
 				</div>
 			</div>
 		</section>
 
+		<!-- Education Section -->
+		<section id="education" class="py-20 md:py-32 px-6 md:px-12 lg:px-20 xl:px-32 bg-[#EBE5DE] relative overflow-hidden">
+			<div class="absolute top-10 left-10 w-16 h-16 border border-[#1A1A1A]/10 hidden lg:block"></div>
+			<div class="absolute bottom-10 right-10 w-24 h-24 border border-[#1A1A1A]/10 hidden lg:block"></div>
+
+			<div class="max-w-[1280px] mx-auto relative">
+				<!-- Section header -->
+				<div class="flex items-center gap-4 mb-16">
+					<span class="text-[10px] uppercase tracking-[0.3em] text-[#6C6863]">04</span>
+					<div class="h-px flex-1 bg-[#1A1A1A]/10"></div>
+					<h2 class="font-serif text-3xl md:text-4xl">
+						<span class="lang-static" data-lang="zh">{tr.education.title}</span>
+						<span class="lang-static hidden" data-lang="en">{tr.education.title}</span>
+					</h2>
+					<div class="h-px flex-1 bg-[#1A1A1A]/10"></div>
+				</div>
+
+				{resume.education.map((edu) => (
+					<div class="flex flex-col md:flex-row md:items-center justify-between gap-6 py-8">
+						<div class="flex-1">
+							<h3 class="font-serif text-2xl md:text-3xl mb-2">{edu.school}</h3>
+							<p class="font-serif italic text-[#6C6863] text-lg">
+								<span class="lang-static" data-lang="zh">{edu.degree.zh}</span>
+								<span class="lang-static hidden" data-lang="en">{edu.degree.en}</span>
+							</p>
+						</div>
+						<div class="flex items-center gap-4">
+							<div class="w-12 h-px bg-[#D4AF37]"></div>
+							<span class="text-[11px] uppercase tracking-[0.25em] text-[#6C6863] whitespace-nowrap">{edu.period}</span>
+						</div>
+					</div>
+				))}
+			</div>
+		</section>
+
 		<!-- Contact Section -->
-		<section id="contact" class="py-24 px-6 bg-black/[0.02] dark:bg-white/[0.02]">
-			<div class="max-w-5xl mx-auto text-center">
-				<h2 class="text-4xl font-bold mb-12">{t("contact.title")}</h2>
-				<div class="embossed-raised rounded-2xl p-8 max-w-md mx-auto">
-					<p class="text-lg mb-6">{resume.personal.email}</p>
-					<div class="flex justify-center gap-4">
-						{resume.personal.links.map((link) => (
-							<a
-								href={link.url}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="px-6 py-3 rounded-full embossed-raised hover:scale-105 transition-transform"
-							>
-								{link.label}
-							</a>
-						))}
+		<section id="contact" class="py-24 md:py-40 px-6 md:px-12 lg:px-20 xl:px-32 border-t border-[#1A1A1A]/10 relative overflow-hidden">
+			<div class="absolute inset-0 bg-gradient-to-b from-transparent via-[#D4AF37]/3 to-transparent pointer-events-none"></div>
+
+			<div class="max-w-[1280px] mx-auto relative">
+				<div class="grid lg:grid-cols-12 gap-12 lg:gap-24">
+					<div class="lg:col-span-8 lg:col-start-3 text-center">
+						<span class="text-[10px] uppercase tracking-[0.3em] text-[#6C6863] block mb-8">
+							<span class="lang-static" data-lang="zh">{tr.contact.title}</span>
+							<span class="lang-static hidden" data-lang="en">{tr.contact.title}</span>
+						</span>
+
+						<h2 class="font-serif text-5xl md:text-6xl lg:text-7xl leading-[0.9] mb-12">
+							Let's <span class="italic text-[#D4AF37]">Connect</span>
+						</h2>
+
+						<!-- Contact Info -->
+						<div class="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-10 mb-12">
+							<!-- Email -->
+							<div class="flex items-center gap-3 text-[#6C6863] group">
+								<a href={`mailto:${resume.personal.email}`} class="flex items-center gap-3 hover:text-[#D4AF37] transition-colors duration-500">
+									<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+										<rect x="2" y="4" width="20" height="16" rx="2"/>
+										<path d="M22 6L12 13L2 6"/>
+									</svg>
+									<span class="text-sm tracking-wide">{resume.personal.email}</span>
+								</a>
+								<button class="copy-btn p-1.5 hover:text-[#D4AF37] transition-colors duration-500" data-copy={resume.personal.email} title="复制邮箱">
+									<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+										<rect x="9" y="9" width="13" height="13" rx="2"/>
+										<path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+									</svg>
+								</button>
+							</div>
+
+							<!-- Phone -->
+							{resume.personal.phone && (
+								<div class="flex items-center gap-3 text-[#6C6863] group">
+									<a href={`tel:${resume.personal.phone}`} class="flex items-center gap-3 hover:text-[#D4AF37] transition-colors duration-500">
+										<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+											<path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/>
+										</svg>
+										<span class="text-sm tracking-wide">{resume.personal.phone}</span>
+									</a>
+									<button class="copy-btn p-1.5 hover:text-[#D4AF37] transition-colors duration-500" data-copy={resume.personal.phone} title="复制电话">
+										<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+											<rect x="9" y="9" width="13" height="13" rx="2"/>
+											<path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/>
+										</svg>
+									</button>
+								</div>
+							)}
+
+							<!-- GitHub -->
+							{resume.personal.links.map((link) => (
+								<a href={link.url} target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 text-[#6C6863] hover:text-[#D4AF37] transition-colors duration-500 group">
+									<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+										<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+									</svg>
+									<span class="text-sm tracking-wide">{link.label}</span>
+								</a>
+							))}
+						</div>
+
+						<div class="w-16 h-px bg-[#D4AF37] mx-auto"></div>
 					</div>
 				</div>
 			</div>
 		</section>
 
 		<!-- Footer -->
-		<footer class="py-8 px-6 border-t border-black/[0.04] dark:border-white/[0.06]">
-			<div class="max-w-5xl mx-auto text-center text-sm text-black/50 dark:text-white/50">
-				© {new Date().getFullYear()} {resume.personal.name[lang]}. {t("footer.copyright")}.
+		<footer class="py-8 px-6 md:px-12 lg:px-20 xl:px-32 border-t border-[#1A1A1A]/10">
+			<div class="max-w-[1280px] mx-auto flex flex-col md:flex-row justify-between items-center gap-4">
+				<p class="text-[10px] uppercase tracking-[0.25em] text-[#6C6863]">
+					© {new Date().getFullYear()} Francis 范挚铖
+				</p>
+				<p class="text-[10px] uppercase tracking-[0.25em] text-[#6C6863]">
+					<span class="lang-static" data-lang="zh">{tr.footer.copyright}</span>
+					<span class="lang-static hidden" data-lang="en">{tr.footer.copyright}</span>
+				</p>
 			</div>
 		</footer>
 	</main>
 </Layout>
+
+<script define:vars={{ initialLang }}>
+	// 语言切换功能
+	function switchLanguage(lang) {
+		// 切换 body 上的语言类
+		document.body.classList.remove('lang-zh', 'lang-en');
+		document.body.classList.add('lang-' + lang);
+
+		// 更新静态文本
+		document.querySelectorAll('.lang-static').forEach(el => {
+			if (el.dataset.lang === lang) {
+				el.classList.remove('hidden');
+			} else {
+				el.classList.add('hidden');
+			}
+		});
+
+		// 保存选择到 localStorage
+		localStorage.setItem('preferred-lang', lang);
+
+		// 更新 HTML lang 属性
+		document.documentElement.lang = lang;
+	}
+
+	// 初始化语言
+	const savedLang = localStorage.getItem('preferred-lang');
+	const langToUse = savedLang || initialLang;
+	switchLanguage(langToUse);
+
+	// 监听语言切换按钮点击
+	document.getElementById('lang-switch')?.addEventListener('click', (e) => {
+		e.preventDefault();
+		const currentLang = document.body.classList.contains('lang-zh') ? 'zh' : 'en';
+		const newLang = currentLang === 'zh' ? 'en' : 'zh';
+		switchLanguage(newLang);
+	});
+
+	// 移动端语言切换
+	document.getElementById('lang-switch-mobile')?.addEventListener('click', (e) => {
+		e.preventDefault();
+		const currentLang = document.body.classList.contains('lang-zh') ? 'zh' : 'en';
+		const newLang = currentLang === 'zh' ? 'en' : 'zh';
+		switchLanguage(newLang);
+	});
+
+	// PDF 下载
+	document.getElementById('download-pdf-nav')?.addEventListener('click', () => {
+		window.print();
+	});
+	document.getElementById('download-pdf-mobile')?.addEventListener('click', () => {
+		window.print();
+	});
+	document.getElementById('download-pdf-hero')?.addEventListener('click', () => {
+		window.print();
+	});
+
+	// Copy button functionality
+	document.querySelectorAll('.copy-btn').forEach((btn) => {
+		btn.addEventListener('click', async () => {
+			const text = btn.getAttribute('data-copy');
+			if (text) {
+				await navigator.clipboard.writeText(text);
+				const svg = btn.querySelector('svg');
+				const originalPath = svg.innerHTML;
+				svg.innerHTML = '<path d="M20 6L9 17l-5-5" stroke-linecap="round" stroke-linejoin="round"/>';
+				btn.classList.add('text-[#D4AF37]');
+				setTimeout(() => {
+					svg.innerHTML = originalPath;
+					btn.classList.remove('text-[#D4AF37]');
+				}, 1500);
+			}
+		});
+	});
+</script>
