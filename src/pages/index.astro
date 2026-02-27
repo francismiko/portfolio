@@ -167,8 +167,8 @@ const tr = staticTranslations[initialLang as keyof typeof staticTranslations];
 									<svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
 										<path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
 									</svg>
-									<span class="lang-static" data-lang="zh">PDF</span>
-									<span class="lang-static hidden" data-lang="en">PDF</span>
+									<span class="lang-static" data-lang="zh">下载简历</span>
+									<span class="lang-static hidden" data-lang="en">Resume</span>
 								</span>
 							</button>
 						</div>
@@ -490,15 +490,15 @@ const tr = staticTranslations[initialLang as keyof typeof staticTranslations];
 	});
 
 	// PDF 下载
-	document.getElementById('download-pdf-nav')?.addEventListener('click', () => {
-		window.print();
-	});
-	document.getElementById('download-pdf-mobile')?.addEventListener('click', () => {
-		window.print();
-	});
-	document.getElementById('download-pdf-hero')?.addEventListener('click', () => {
-		window.print();
-	});
+	function downloadPDF() {
+		const a = document.createElement('a');
+		a.href = '/resume.pdf';
+		a.download = 'Francis_范挚铖_Resume.pdf';
+		a.click();
+	}
+	document.getElementById('download-pdf-nav')?.addEventListener('click', downloadPDF);
+	document.getElementById('download-pdf-mobile')?.addEventListener('click', downloadPDF);
+	document.getElementById('download-pdf-hero')?.addEventListener('click', downloadPDF);
 
 	// Copy button functionality
 	document.querySelectorAll('.copy-btn').forEach((btn) => {
